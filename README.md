@@ -1,12 +1,20 @@
-# Microservices_Practice
-This a practice project for spring boot microservices
+# Microservices Practice
 
-For calling 
-microservice 1 from apigateway - http://localhost:8080/apiOne/getByAge/18
-
-microservice 2 from apigateway - http://localhost:8080/apiTwo/test/18
+This project demonstrates the practice of **Spring Boot Microservices**. The application consists of multiple microservices, with the use of a **service registry**, **API Gateway** for routing, **circuit breakers**, and **Micrometer** and **Zipkin** for distributed tracing.
 
 
-using micrometer and zipkins we can see distributed tracing
+## Project Structure
 
-zipkins run on docker run -d -p 9411:9411 openzipkin/zipkin
+- **Microservice 1**: Exposed via API Gateway endpoint `http://localhost:8080/apiOne/getByAge/{age}`
+- **Microservice 2**: Exposed via API Gateway endpoint `http://localhost:8080/apiTwo/test/{age}`
+
+## Distributed Tracing with Micrometer & Zipkin
+
+This project integrates **Micrometer** for metrics collection and **Zipkin** for distributed tracing.
+
+### Starting Zipkin
+
+To run Zipkin in Docker, use the following command:
+
+```bash
+docker run -d -p 9411:9411 openzipkin/zipkin
