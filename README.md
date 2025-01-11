@@ -74,5 +74,5 @@ Here’s a summary of the tasks that have been successfully completed:
 - **Microservices Communication (A calls B using RestTemplate and openFeign)**: ✅ Completed
 - **Circuit Breakers Implementation**: ✅ Completed
 - **Distributed Tracing with Micrometer & Zipkin (Spring Cloud Sleuth)**: ✅ Completed
-- **Kafka Integration (Producer and Consumer)**: ✅ Completed
+- **Kafka Integration (Producer and Consumer)**: 🔄 Completed
 - **Redis Implementation (Caching in Product Service)**: 🔄 In Progress
