@@ -22,6 +22,7 @@
     <module>microservice-2</module>
     <module>apiGateWay</module>
     <module>EurekaServer</module>
+    <module>Redis-Practise</module>
   </modules>
   <dependencies>
     <dependency>

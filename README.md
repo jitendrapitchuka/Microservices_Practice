@@ -39,15 +39,40 @@ steps to up the docker compose file for kafka placed in deployment parent folder
 4)docker run -d --name kafka --network kafka-network -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_BROKER_ID=1 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 confluentinc/cp-kafka:latest
 ```
 
+### Redis Implementation (Redis-Practise Module)
+
+1. **Start Redis container**:
+    ```bash
+    docker run --name my-redis -p 6379:6379 -d redis
+    ```
+
+2. **Access Redis CLI**:
+    ```bash
+    docker exec -it my-redis sh
+    ```
+
+3. **In Redis CLI**:
+    ```bash
+    redis-cli
+    keys product:*
+    FLUSHDB
+    keys GetProduct:*
+    ```
+
+In the **Product Service**, I have implemented caching. The first time a product is fetched using its ID, it will take around 10 seconds (due to a simulated delay). However, subsequent fetches for the same product will be much faster because the result is cached in Redis.
+
+---
+
 ## Task Progress Tracking
 
 Here’s a summary of the tasks that have been successfully completed:
 
-- **Flyway Database Migration**: ✅ Completed
-- **Exception Handling in Spring Boot**: ✅ Completed
-- **Environment-Specific Application Properties (dev, prod)**: ✅ Completed
+- **[Flyway Database Migration](https://github.com/jitendrapitchuka/flyway_example_springboot)**: ✅ Completed
+- **Exception Handling in Spring Boot**(In MicroService-1): ✅ Completed
+- **Environment-Specific Application Properties (dev, prod)** (Not included in this project): ✅ Completed
 - **API Gateway Setup**: ✅ Completed
-- **Microservices Communication (A calls B)**: ✅ Completed
+- **Microservices Communication (A calls B using RestTemplate and openFeign)**: ✅ Completed
 - **Circuit Breakers Implementation**: ✅ Completed
-- **Distributed Tracing with Micrometer & Zipkin (Spring Cloud Sleuth)**: ✅ In Progress
+- **Distributed Tracing with Micrometer & Zipkin (Spring Cloud Sleuth)**: ✅ Completed
 - **Kafka Integration (Producer and Consumer)**: ✅ Completed
+- **Redis Implementation (Caching in Product Service)**: 🔄 In Progress
