@@ -61,8 +61,29 @@ steps to up the docker compose file for kafka placed in deployment parent folder
 
 In the **Product Service**, I have implemented caching. The first time a product is fetched using its ID, it will take around 10 seconds (due to a simulated delay). However, subsequent fetches for the same product will be much faster because the result is cached in Redis.
 
----
 
+
+## Prometheus and Grafana Implementations
+
+### 1. Start Docker Compose for Grafana and Prometheus
+
+Navigate to the monitoring folder and run the following command to start the services:
+
+   ```bash
+   docker-compose up -d
+   ```
+
+### 2. Access Prometheus and Grafana
+
+You can access Prometheus and Grafana through the following ports:
+
+- **Prometheus**: [http://localhost:9090](http://localhost:9090)
+- **Grafana**: [http://localhost:3000](http://localhost:3000)
+
+### 3. Make sure to replace `localhost` with your server's IP address in prometheus.yml file in monitoring folder
+
+
+---
 ## Task Progress Tracking
 
 Here’s a summary of the tasks that have been successfully completed:
@@ -76,3 +97,4 @@ Here’s a summary of the tasks that have been successfully completed:
 - **Distributed Tracing with Micrometer & Zipkin (Spring Cloud Sleuth)**: ✅ Completed
 - **Kafka Integration (Producer and Consumer)**: 🔄 In Progress
 - **Redis Implementation (Caching in Product Service)**: 🔄 In Progress
+- **Prometheus and Grafana Integration**(in Microservice-2):🔄 In Progress
