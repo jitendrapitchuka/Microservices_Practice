@@ -29,6 +29,14 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
 
+  loki:
+    image: grafana/loki:main
+    command: [ '-config.file=/etc/loki/local-config.yaml' ]
+    ports:
+      - '3100:3100'
+    networks:
+      - monitoring
+
 networks:
   monitoring:
     driver: bridge

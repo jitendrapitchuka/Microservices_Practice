@@ -63,7 +63,7 @@ In the **Product Service**, I have implemented caching. The first time a product
 
 
 
-## Prometheus and Grafana Implementations
+## Prometheus ,Grafana , Loki Implementations
 
 ### 1. Start Docker Compose for Grafana and Prometheus
 
@@ -75,13 +75,15 @@ Navigate to the monitoring folder and run the following command to start the ser
 
 ### 2. Access Prometheus and Grafana
 
-You can access Prometheus and Grafana through the following ports:
+You can access Prometheus ,Grafana and Loki through the following ports:
 
 - **Prometheus**: [http://localhost:9090](http://localhost:9090)
 - **Grafana**: [http://localhost:3000](http://localhost:3000)
+- **Loki**: [http://localhost:3100/metrics](http://localhost:3100/metrics)
 
 ### 3. Make sure to replace `localhost` with your server's IP address in prometheus.yml file in monitoring folder
 
+### 4. Added the necessary data sources for both Prometheus and Loki in Grafana to view the metrics and logs.
 
 ---
 ## Task Progress Tracking
@@ -97,4 +99,4 @@ Here’s a summary of the tasks that have been successfully completed:
 - **Distributed Tracing with Micrometer & Zipkin (Spring Cloud Sleuth)**: ✅ Completed
 - **Kafka Integration (Producer and Consumer)**: 🔄 In Progress
 - **Redis Implementation (Caching in Product Service)**: 🔄 In Progress
-- **Prometheus and Grafana Integration**(in Microservice-2):🔄 In Progress
+- **Prometheus, Grafana and Loki Integration**(in Microservice-2):🔄 In Progress
