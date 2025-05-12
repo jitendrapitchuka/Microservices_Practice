@@ -52,7 +52,7 @@ public class ProductService {
 
         public List<Product> getAllProducts(){
             List<Product>products=new ArrayList<>();
-            productRepo.findAll().forEach(product -> products.add(product));
+            productRepo.findAll().forEach(products::add);
             return products;
         }
 }
