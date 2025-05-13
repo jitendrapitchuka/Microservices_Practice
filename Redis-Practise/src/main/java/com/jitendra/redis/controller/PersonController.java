@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jitendra.redis.entity.Person;
+import com.jitendra.redis.entity.PersonElasticEntity;
 import com.jitendra.redis.services.PersonService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +24,8 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Optional<Person>> getPersonById(@PathVariable int id) {
-        Optional<Person> person = personService.getPersonById(id);
+    public ResponseEntity<Optional<PersonElasticEntity>> getPersonById(@PathVariable int id) {
+        Optional<PersonElasticEntity> person = personService.getPersonById(id);
         return ResponseEntity.ok().body(person);
     }
 
@@ -35,8 +36,8 @@ public class PersonController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Iterable<Person>> getAllPerson() {
-        Iterable<Person> persons = personService.getAllPerson();
+    public ResponseEntity<Iterable<PersonElasticEntity>> getAllPerson() {
+        Iterable<PersonElasticEntity> persons = personService.getAllPerson();
         return ResponseEntity.ok().body(persons);
     }
     

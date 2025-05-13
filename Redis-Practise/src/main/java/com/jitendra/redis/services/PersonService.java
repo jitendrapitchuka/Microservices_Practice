@@ -1,36 +1,48 @@
 package com.jitendra.redis.services;
 
-import java.lang.foreign.Linker.Option;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jitendra.redis.entity.Person;
+import com.jitendra.redis.entity.PersonElasticEntity;
+import com.jitendra.redis.repo.PersonElasticRepo;
 import com.jitendra.redis.repo.PersonRepo;
+
 
 @Service
 public class PersonService {
 
 @Autowired
 private PersonRepo personRepo;
+@Autowired
+private PersonElasticRepo personElasticRepo;
 
-public Optional<Person> getPersonById(int id) {
-    return personRepo.findById(id);
+public Optional<PersonElasticEntity> getPersonById(int id) {
+    return personElasticRepo.findById(id);
 
 }
 
 public Person savePerson(Person person) {
-    return personRepo.save(person);
+    PersonElasticEntity personElasticEntity =new PersonElasticEntity();
+    Person savedPerson = personRepo.save(person);
+    personElasticEntity.setId(savedPerson.getId());
+    personElasticEntity.setName(savedPerson.getName());
+    personElasticEntity.setEmail(savedPerson.getEmail());
+    personElasticRepo.save(personElasticEntity);
+
+    return savedPerson;
+    
 }
 
 public void deletePerson(int id) {
-    personRepo.deleteById(id);  
+    personRepo.deleteById(id);
+    personElasticRepo.deleteById(id);  
 }
 
-public Iterable<Person> getAllPerson() {
-    return personRepo.findAll();
+public Iterable<PersonElasticEntity> getAllPerson() {
+    return personElasticRepo.findAll();
 }
 
 }
