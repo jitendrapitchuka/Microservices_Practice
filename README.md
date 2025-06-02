@@ -195,7 +195,7 @@ See Sample SS for the reference:
 
 Here’s a summary of the tasks that have been successfully completed:
 
-- **[Flyway Database Migration](https://github.com/jitendrapitchuka/flyway_example_springboot)**: ✅ Completed
+- **[Flyway Database Migration](https://github.com/jitendrapitchuka/flyway_example_sprringboot)**: ✅ Completed
 - **Exception Handling in Spring Boot**(In MicroService-1): ✅ Completed
 - **Environment-Specific Application Properties (dev, prod)** (Not included in this project): ✅ Completed
 - **API Gateway Setup**: ✅ Completed
