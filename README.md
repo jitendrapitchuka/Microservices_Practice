@@ -57,11 +57,49 @@ steps to up the docker compose file for kafka placed in deployment parent folder
     keys product:*
     FLUSHDB
     keys GetProduct:*
+    keys *
     ```
 
-In the **Product Service**, I have implemented caching. The first time a product is fetched using its ID, it will take around 10 seconds (due to a simulated delay). However, subsequent fetches for the same product will be much faster because the result is cached in Redis.
+
+In the **Product Service**, I have implemented caching. The first time a product is fetched using its ID, it will take around 10 seconds (due to a simulated delay). However, subsequent fetches for the same product will be much faster because the result is cached in Redis. I have set the cache expiration time to 25 seconds. So, if you try to fetch the same product within 25 seconds, it will return the cached result without hitting the database again.
 
 
+
+#### Redis Cache config
+```java
+    @Bean
+    public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
+        
+        RedisCacheConfiguration cacheConfiguration=RedisCacheConfiguration.defaultCacheConfig()
+        .entryTtl(Duration.ofMillis(25000))
+        .serializeValuesWith(RedisSerializationContext.SerializationPair
+        .fromSerializer(new Jackson2JsonRedisSerializer<>(Product.class)));
+
+        
+        return RedisCacheManager.builder(redisConnectionFactory)
+                .cacheDefaults(cacheConfiguration).build();
+
+    }
+
+```
+#### Redis hash 
+
+In product.java class I have used the redis hash to store the product details in redis cache and used ttl of 25 seconds for the cache to expire.
+
+```java
+@RedisHash(value = "product",timeToLive =25)
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class Product implements Serializable {
+
+    @Id
+    @Indexed
+    private String id=UUID.randomUUID().toString();
+    private String name;
+    private double price;
+```
+**Note** : The TTL setting in the Redis configuration does not automatically delete individual Redis hash entries. Therefore, we have used the @RedisHash annotation with timeToLive set to 25 seconds in the Product class. This ensures that product details are stored in Redis with a TTL, allowing them to expire automatically after the specified duration.
 
 ## Prometheus ,Grafana , Loki Implementations
 
@@ -203,6 +241,6 @@ Here’s a summary of the tasks that have been successfully completed:
 - **Circuit Breakers Implementation**: ✅ Completed
 - **Distributed Tracing with Micrometer & Zipkin (Spring Cloud Sleuth)**: ✅ Completed
 - **Kafka Integration (Producer and Consumer)**: ✅ Completed
-- **Redis Implementation (Caching in Product Service)**: 🔄 In Progress
+- **Redis Implementation (Caching in Product Service)**: ✅ Completed
 - **Prometheus, Grafana and Loki Integration**(in Microservice-2):✅ Completed
 - **Elastic-Search**(In Redis-Practise module Product entity):🔄 In Progress
