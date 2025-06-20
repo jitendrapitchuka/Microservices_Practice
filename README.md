@@ -129,9 +129,14 @@ This module demonstrates how to integrate **Elasticsearch** into a Spring Boot a
 
 ### 📦 Setup Elasticsearch with Docker
 
-To set up a local **Elasticsearch** instance using Docker, follow the official guide:
+- To set up a local **Elasticsearch** instance using Docker, follow the official guide:
 
-🔗 [Elasticsearch Docker Setup - Official Guide](https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-docker-basic)
+- 🔗 [Elasticsearch Docker Setup - Official Guide](https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-docker-basic)
+
+- Dont forget to add the certificate to the jdk cacerts file in your local machine.
+```bash
+keytool -import -alias elasticsearch -file /path/to/your/certificate.crt -keystore $JAVA_HOME/lib/security/cacerts
+```
 
 ### 📝 Important Note
 
@@ -188,7 +193,7 @@ Sample Json output of all stored values in elastic and we can see below the auto
 - **PersonElastic**: Stored in Elasticsearch
 
  When saving a record, persist it in both databases.However all search operations are performed only on the `PersonElastic` entity in Elasticsearch.
-
+---
 ### 📊 Kibana Setup for Elasticsearch (Docker)
 
 To run **Kibana** with Elasticsearch using Docker, follow the official guide:  
@@ -227,7 +232,43 @@ See Sample SS for the reference:
 ![kibana indice photo](./Indice_photo.png)
 
 ![kibana docs from person indice photo ](./docs_in_personIndice_photo.png) 
+---
+##  📦 **Logstash Setup**
 
+Run logstash using the following docker command:
+
+```bash
+docker run --network=<network_name> -d \
+  -v "<host_logs_dir>:/logs" \
+  -v "<host_logstash_conf_path>:/usr/share/logstash/pipeline/logstash.conf" \
+  -v "<host_ssl_cert_path>:/usr/share/logstash/config/httpcert.crt" \
+  -p 5044:5044 \
+  -p 5000:5000 \
+  docker.elastic.co/logstash/logstash:<version>
+```
+Changes to made in the logstash.conf to read the logs from the file and send it to elasticsearch.
+
+```conf
+output {
+  elasticsearch {
+    hosts => ["https://<elastic_Search_Container_Ip>:9200"]
+    index => "springboot-logs"
+    user => "elastic"
+    password => <elastic_password>
+    ssl_enabled => true
+    ssl_certificate_authorities => ["/usr/share/logstash/config/httpcert.crt"]
+
+  }
+}
+```
+See Sample SS for the reference:
+
+![kibana logs photo](./logs_from_kibana_ss.png)
+
+# POINT TO NOTE
+- Create a common network for Elastic Search, Kibana, and Logstash to allow them to communicate with each other.
+
+  
 ---
 ## Task Progress Tracking
 
@@ -243,4 +284,6 @@ Here’s a summary of the tasks that have been successfully completed:
 - **Kafka Integration (Producer and Consumer)**: ✅ Completed
 - **Redis Implementation (Caching in Product Service)**: ✅ Completed
 - **Prometheus, Grafana and Loki Integration**(in Microservice-2):✅ Completed
-- **Elastic-Search**(In Redis-Practise module Product entity):🔄 In Progress
+- **Elastic-Search**(In Redis-Practise module Product entity):✅ Completed
+- **Kibana Setup for Elasticsearch**(In Redis-Practise module Product entity): ✅ Completed
+- **Logstash Setup**(In Redis-Practise module Product entity): ✅ Completed
